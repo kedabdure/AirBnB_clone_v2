@@ -54,4 +54,4 @@ class FileStorage:
         if obj is None:
             return
         else:
-            del obj
+            del self.__objects["{}.{}".format(type(object).__name__, obj.id)]
