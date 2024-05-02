@@ -219,28 +219,22 @@ class HBNBCommand(cmd.Cmd):
         """ Shows all objects, or all objects of a class"""
         objects = storage.all()
         my_list = []
-
-        # if cls not in HBNBCommand.classes:
-        #         print("** class doesn't exist **")
-        #         return
-        # else:
-
         if not cls:
-            my_list = [str(obj) for obj in objects.values()]
-            return my_list
-        else:
-            try:
-                args = cls.split(" ")
-                cls_name = args[0]
-                if cls_name not in type(self).classes:
-                    raise NameError("** class doesn't exist **")
-                for key in objects:
-                    name = key.split('.')
-                    if name[0] == args[0]:
-                        my_list.append(str(objects[key]))
-                return my_list
-            except NameError:
-                print("** class doesn't exist **")
+            for key in objects:
+                my_list.append(str(objects[key]))
+            print(my_list)
+            return
+        try:
+            args = cls.split(" ")
+            if args[0] not in type(self).classes:
+                raise NameError()
+            for key in objects:
+                name = key.split('.')
+                if name[0] == args[0]:
+                    my_list.append(str(objects[key]))
+            print(my_list)
+        except NameError:
+            print("** class doesn't exist **")
 
     def help_all(self):
         """ Help information for the all command """
