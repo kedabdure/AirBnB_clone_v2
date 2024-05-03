@@ -1,17 +1,18 @@
 #!/usr/bin/python3
-from sqlalchemy import create_engine
+"""Defines the DBStorage engine."""
 from os import getenv
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.orm import scoped_session
-from base_model import Base
+from models.base_model import Base
 from models.base_model import BaseModel
-from models.user import User
-from models.place import Place
-from models.state import State
-from models.city import City
 from models.amenity import Amenity
+from models.city import City
+from models.place import Place
 from models.review import Review
-
+from models.state import State
+from models.user import User
+from sqlalchemy import create_engine
+from sqlalchemy.orm import relationship
+from sqlalchemy.orm import scoped_session
+from sqlalchemy.orm import sessionmaker
 
 class DBStorage:
     """new engine for database"""
@@ -62,8 +63,9 @@ class DBStorage:
     def reload(self):
         """create all tables in the database"""
         Base.metadata.create_all(self.__engine)
-        sussion_fac = sessionmaker(self.__engine, expire_on_commit=False)
-        Session = scoped_session(sussion_fac)
+        session_factory = sessionmaker(bind=self.__engine,
+                                       expire_on_commit=False)
+        Session = scoped_session(session_factory)
         self.__session = Session()
 
     def close(self):
