@@ -18,7 +18,7 @@ class BaseModel:
         """Instatntiates a new model"""
         self.id = str(uuid.uuid4())
         self.created_at = datetime.utcnow()
-        self.updated_at = datetime.urcnow()
+        self.updated_at = datetime.utcnow()
         if kwargs:
             for k, v in kwargs.items():
                 if k == 'created_at':
@@ -44,6 +44,7 @@ class BaseModel:
         """Convert instance into dict format"""
         dictionary = {}
         dictionary.update(self.__dict__)
+        dictionary.pop('_sa_instance_state', None)
         dictionary.update({'__class__':
                           (str(type(self)).split('.')[-1]).split('\'')[0]})
         dictionary['created_at'] = self.created_at.isoformat()
