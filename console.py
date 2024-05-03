@@ -4,6 +4,7 @@ import cmd
 import sys
 import shlex
 from models.base_model import BaseModel
+from models.engine.file_storage import FileStorage
 from models.__init__ import storage
 from models.user import User
 from models.place import Place
@@ -122,26 +123,23 @@ class HBNBCommand(cmd.Cmd):
         try:
             args = shlex.split(args)
             new_instance = eval(args[0])()
-            params = {}
-            for param in args[1:]:
+            for i in args[1:]:
                 try:
-                    key = param.split('=')[0]
-                    value = param.split('=')[1]
+                    key = i.split("=")[0]
+                    value = i.split("=")[1]
                     if hasattr(new_instance, key) is True:
-                        value = value.replace('_', ' ')
+                        value = value.replace("_", " ")
                         try:
                             value = eval(value)
                         except:
                             pass
                         setattr(new_instance, key, value)
-                    else:
-                        pass
                 except (ValueError, IndexError):
                     pass
             new_instance.save()
             print(new_instance.id)
         except:
-            print("** class name missing **")
+            print("** class doesn't exist **")
             return
 
     def help_create(self):

@@ -20,32 +20,32 @@ class DBStorage:
     __session = None
     
     def __init__(self):
-        """inistancialion"""
+        """Initialize a new DBStorage instance."""
         self.__engine = create_engine("mysql+mysqldb://{}:{}@{}/{}".
                                       format(getenv("HBNB_MYSQL_USER"),
                                              getenv("HBNB_MYSQL_PWD"),
                                              getenv("HBNB_MYSQL_HOST"),
                                              getenv("HBNB_MYSQL_DB")),
-                                    pool_pre_ping=True)
+                                      pool_pre_ping=True)
         if getenv("HBNB_ENV") == "test":
             Base.metadata.drop_all(self.__engine)
             
-        def all(self, cls=None):
-            """query on the current db session"""
-            self.__session = sessionmaker(bind=self.__engine)
-            if cls is None:
-                obj = self.__session.query(State).all()
-                obj.extend(self.__session.query(User).all())
-                obj.extend(self.__session.query(Place).all())
-                obj.extend(self.__session.query(City).all())
-                obj.extend(self.__session.query(Amenity).all())
-                obj.extend(self.__session.query(Review).all())
-            else:
-                if type(cls) == str:
-                    cls = eval(cls)
-                objs = cls.__session.query(cls).all()
-                
-            return {"{}.{}".format(obj, obj.id): obj for obj in objs}
+    def all(self, cls=None):
+        """query on the current db session"""
+        self.__session = sessionmaker(bind=self.__engine)
+        if cls is None:
+            obj = self.__session.query(State).all()
+            obj.extend(self.__session.query(User).all())
+            obj.extend(self.__session.query(Place).all())
+            obj.extend(self.__session.query(City).all())
+            obj.extend(self.__session.query(Amenity).all())
+            obj.extend(self.__session.query(Review).all())
+        else:
+            if type(cls) == str:
+                cls = eval(cls)
+            objs = cls.__session.query(cls).all()
+            
+        return {"{}.{}".format(type(obj), obj.id): obj for obj in objs}
 
     def new(self, obj):
         """add the obj to the current database"""
