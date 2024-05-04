@@ -2,9 +2,7 @@
 """ Console Module """
 import cmd
 import sys
-import shlex
 from models.base_model import BaseModel
-from models.engine.file_storage import FileStorage
 from models.__init__ import storage
 from models.user import User
 from models.place import Place
@@ -12,6 +10,7 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
+import shlex
 
 
 class HBNBCommand(cmd.Cmd):
@@ -215,8 +214,6 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, line):
         """Prints all string representation of all instances
-        Exceptions:
-            NameError: when there is no object taht has the name
         """
         objects = storage.all()
         my_list = []
