@@ -1,0 +1,143 @@
+/* Container for filter section */
+.filters {
+    background-color: white;
+    height: 70px;
+    width: 100%;
+    border: 1px solid #DDDDDD;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds a slight shadow */
+}
+
+/* Button in the filters section */
+section.filters > button {
+    font-size: 18px;
+    color: white;
+    background-color: #FF5A5F;
+    height: 48px;
+    border: 0px;
+    border-radius: 4px;
+    width: 20%;
+    margin-left: auto;
+    margin-right: 30px;
+    opacity: 1;
+    transition: opacity 0.3s ease; /* Smooth transition for hover effect */
+}
+
+section.filters > button:hover {
+    opacity: 0.9;
+    background-color: #e04e50; /* Slightly darker background on hover */
+}
+
+/* Layout for locations and amenities */
+.locations, .amenities {
+    height: 100%;
+    width: 25%;
+    padding-left: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center content vertically */
+}
+
+.locations {
+    border-right: 1px solid #DDDDDD;
+}
+
+/* Headers within locations and amenities */
+.locations > h3, .amenities > h3 {
+    font-weight: 600;
+    margin: 12px 0 5px 0;
+}
+
+.locations > h4, .amenities > h4 {
+    font-weight: 400;
+    font-size: 14px;
+    margin: 0 0 5px 0;
+}
+
+/* Popover for additional information */
+.popover {
+    display: none;
+    position: absolute; /* Changed from relative to absolute for better positioning */
+    left: 0; /* Adjusted positioning to fit better */
+    background-color: #FAFAFA;
+    width: auto; /* Set width to auto to fit content */
+    border: 1px solid #DDDDDD;
+    border-radius: 4px;
+    z-index: 1;
+    padding: 30px 50px 30px 20px; /* Adjusted padding for better spacing */
+    margin-top: 17px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds a slight shadow */
+    transition: all 0.3s ease; /* Smooth transition for showing the popover */
+}
+
+.popover, .popover ul {
+    list-style-type: none;
+}
+
+/* Show popover on hover */
+.locations:hover > .popover, .amenities:hover > .popover {
+    display: block;
+    animation: fadeIn 0.3s ease-in-out; /* Smooth fade-in animation */
+}
+
+/* Fade-in animation for popover */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Headers within popover */
+.popover h2 {
+    margin-top: 0px;
+    margin-bottom: 5px;
+    font-size: 18px;
+    color: #333;
+}
+
+/* List items in popover for locations */
+.locations > .popover > li {
+    margin-bottom: 30px;
+    margin-left: 30px;
+}
+
+/* Nested list within popover for locations */
+.locations > .popover > li > ul {
+    padding-left: 20px;
+}
+.locations > .popover > li > ul > li {
+    margin-bottom: 10px;
+}
+
+/* List items in popover for amenities */
+.amenities > .popover > li {
+    margin-left: 50px;
+    margin-bottom: 10px;
+}
+
+/* Adding some additional styling */
+body {
+    font-family: 'Arial', sans-serif; /* Set default font */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Apply border-box model to all elements */
+}
+
+/* Styling for filter headers */
+.filters h3, .filters h4 {
+    margin: 0;
+    padding: 0;
+    color: #555;
+}
+
+/* Adding some padding to the main content */
+.main-content {
+    padding: 20px;
+}
