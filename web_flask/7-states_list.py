@@ -2,57 +2,23 @@
 """
 starts a Flask web application
 """
-
+from models import storage
+from models import *
 from flask import Flask, render_template
 app = Flask(__name__)
 
 
-@app.route('/', strict_slashes=False)
-def index():
-    """returns Hello HBNB!"""
-    return 'Hello HBNB!'
+@app.route('/states_list', strict_slashes=False)
+def states_list():
+    """display a HTML page with the states listed in alphabetical order"""
+    states = sorted(list(storage.all("State").values()), key=lambda x: x.name)
+    return render_template('7-states_list.html', states=states)
 
 
-@app.route('/hbnb', strict_slashes=False)
-def hbnb():
-    """returns HBNB"""
-    return 'HBNB'
-
-
-@app.route('/c/<text>', strict_slashes=False)
-def cisfun(text):
-    """display “C ” followed by the value of the text variable"""
-    return 'C ' + text.replace('_', ' ')
-
-
-@app.route('/python', strict_slashes=False)
-@app.route('/python/<text>', strict_slashes=False)
-def pythoniscool(text='is cool'):
-    """display “Python ”, followed by the value of the text variable"""
-    return 'Python ' + text.replace('_', ' ')
-
-
-@app.route('/number/<int:n>', strict_slashes=False)
-def number(n):
-    """display a number"""
-    return '{:d} is a number'.format(n)
-
-
-@app.route('/number_template/<int:n>', strict_slashes=False)
-def number_template(n):
-    """return an html page only if n is an integer"""
-    return render_template('5-number.html', n=n)
-
-
-@app.route('/number_odd_or_even/<int:n>', strict_slashes=False)
-def number_odd_or_even(n):
-    """display if the number is enven or odd"""
-    if n % 2 == 0:
-        evnodd = 'even'
-    else:
-        evnodd = 'odd'
-
-    return render_template('6-number_odd_or_even.html', n=n, evnodd=evnodd)
+@app.teardown_appcontext
+def teardown_db(exception):
+    """closes the storage on teardown"""
+    storage.close()
 
 
 if __name__ == '__main__':
